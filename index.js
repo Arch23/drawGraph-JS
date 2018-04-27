@@ -9,13 +9,13 @@ var getText = fileName => {
 };
 
 getText("tourRed.txt").then(response => {
-    drawGraph("canvas",response, "#FF0000AA",true,2);
-});
-
-getText("tourBlue.txt").then(response => {
-    drawGraph("canvas",response, "#0000FFAA",false,-2);
+    drawGraph("canvas",response,true,2);
 });
 
 getText("tourOff.txt").then(response => {
-    drawGraph("canvas",response, "#00FF00AA",false,0);
+    drawGraph("canvas",response,false,0);
+});
+
+getText("tourBlue.txt").then(response => {
+    drawGraph("canvas",response,false,-2);
 });

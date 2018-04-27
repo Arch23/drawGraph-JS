@@ -1,4 +1,4 @@
-var width, height, canvas, offset, drawLabels, mainGraphColor, margin, maxX, maxY, minX, minY;
+var width, height, ctx, offset, drawLabels, mainGraphColor, margin, maxX, maxY, minX, minY, fitness, position, name;
 
 var hex2rgba = hexa => {
     const r = parseInt(hexa.slice(1, 3), 16),
@@ -15,7 +15,6 @@ var mapValue = (value, minValue, maxValue, dimension, margin) => {
 };
 
 var printText = (text, x, y) => {
-    const ctx = canvas.getContext("2d");
     const textWidth = ctx.measureText(text).width;
     
     //hack to get aproximated font height
@@ -30,11 +29,33 @@ var printText = (text, x, y) => {
     ctx.fillText(text, x, y);
 };
 
+var printLabel = () => {
+    let text = "";
+    if(name != undefined){
+        text += name+" ";
+    }
+    if(fitness != undefined){
+        text += fitness+" ";
+    }
+    if(text.length != 0){
+        const textWidth = ctx.measureText(text).width;
+        //hack to get aproximated font height
+        const textHeight = ctx.measureText("M").width;
+
+        let x = width-textWidth-margin;
+        let y = height-((textHeight+5)*position)-margin;
+
+
+        ctx.fillStyle = mainGraphColor;
+        ctx.fillText(text,x,y);
+    }
+};
+
 var drawCircle = (x, y) => {
-    const ctx = canvas.getContext("2d");
     const r = 2;
     ctx.beginPath();
     ctx.arc(x, y, r, 0, 2 * Math.PI);
+    ctx.fillStyle = mainGraphColor;
     ctx.fill();
 };
 
@@ -68,7 +89,6 @@ var getLimits = (graph) => {
 };
 
 var simpleGraph = (graph) => {
-    const ctx = canvas.getContext("2d");
     const points = graph.split("\n");
 
     for (let i = 0; i <= points.length; i++) {
@@ -89,7 +109,6 @@ var simpleGraph = (graph) => {
 };
 
 var complexGraph = sections => {
-    const ctx = canvas.getContext("2d");
     
     let firstCity = undefined;
 
@@ -122,14 +141,46 @@ var complexGraph = sections => {
     ctx.stroke();
 };
 
-var drawGraph = (canvasId, graph, hexColor="#000000FF",dL=true,off=0) => {
+var getData = graph => {
+    let lines = graph.split("\n");
+    let data = lines.filter(line => {
+        return line.indexOf("//")!=-1;
+    });
+    let cleanGraph = lines.filter(line => {
+        return(line.indexOf("//")==-1);
+    }).join("\n");
+    data.forEach(el => {
+        if(el.indexOf("#color")!=-1){
+            const splited = el.split(" ");
+            mainGraphColor = splited[1];
+        }else if(el.indexOf("#position")!=-1){
+            const splited = el.split(" ");
+            position = splited[1];
+        }else if(el.indexOf("#fitness")!=-1){
+            const splited = el.split(" ");
+            fitness = splited[1];
+        }else if(el.indexOf("#name")!=-1){
+            const splited = el.split(" ");
+            name = splited[1];
+        }
+    });
+    return cleanGraph;
+};
+
+var drawGraph = (canvasId, graph,dL=true,off=0) => {
     //initialize variables
     margin = 20;
     canvas = document.getElementById(canvasId);
+    ctx = canvas.getContext("2d");
+    ctx.lineCap="round";
+
     height = canvas.height, width = canvas.width;
-    mainGraphColor = hexColor;
     drawLabels = dL;
-    offset = off; 
+    offset = off;
+    position = 0;
+
+    graph = getData(graph);
+    printLabel();
 
     [maxX, maxY, minX, minY] = getLimits(graph);
 
@@ -139,6 +190,8 @@ var drawGraph = (canvasId, graph, hexColor="#000000FF",dL=true,off=0) => {
     }else{
         complexGraph(sections);
     }
+
+    width = height = ctx = offset = drawLabels = mainGraphColor = margin = maxX = maxY = minX = minY = fitness = position = name = undefined;
 };
 
 export default drawGraph;

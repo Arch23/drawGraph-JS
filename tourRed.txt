@@ -1,3 +1,7 @@
+//#color #FF0000AA
+//#fitness 7566
+//#position 2
+//#name red
 1 565 575
 49 605 625
 32 575 665

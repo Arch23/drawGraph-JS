@@ -1,3 +1,7 @@
+//#color #0000FFAA
+//#fitness 8380
+//#name blue
+//#position 1
 29 660 180
 30 410 250
 2 25 185

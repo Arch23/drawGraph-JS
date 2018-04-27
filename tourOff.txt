@@ -1,3 +1,7 @@
+//#color #00FF00AA
+//#fitness 7542
+//#position 0
+//#name offspring
 1 565 575
 22 520 585
 31 420 555
