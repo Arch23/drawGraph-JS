@@ -8,14 +8,14 @@ var getText = fileName => {
     });
 };
 
-getText("tourRed.txt").then(response => {
-    drawGraph("canvas",response,true,2);
+/* getText("tourRed.txt").then(response => {
+    drawGraph("canvas",response,true,0);
 });
 
 getText("tourOff.txt").then(response => {
     drawGraph("canvas",response,false,0);
-});
+}); */
 
 getText("tourBlue.txt").then(response => {
-    drawGraph("canvas",response,false,-2);
+    drawGraph("canvas",response,false,0);
 });

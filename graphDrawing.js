@@ -1,4 +1,4 @@
-var width, height, ctx, offset, drawLabels, mainGraphColor, margin, maxX, maxY, minX, minY, fitness, position, name;
+var width, height, ctx, offset, drawLabels, mainGraphColor, margin, maxX, maxY, minX, minY, fitness, position, name, margin;
 
 var hex2rgba = hexa => {
     const r = parseInt(hexa.slice(1, 3), 16),
@@ -91,6 +91,10 @@ var getLimits = (graph) => {
 var simpleGraph = (graph) => {
     const points = graph.split("\n");
 
+    if(points[0].indexOf("#") != -1){
+        mainGraphColor = points[0];
+        points.splice(0,1);
+    }
     for (let i = 0; i <= points.length; i++) {
         let [id, x, y] = getPointData(points[i % points.length]);
         if (i == 0) {
@@ -164,12 +168,16 @@ var getData = graph => {
             name = splited[1];
         }
     });
-    return cleanGraph;
+    return cleanGraph.trim();
 };
 
-var drawGraph = (canvasId, graph,dL=true,off=0) => {
+var unsetGlobals = () => {
+    width = height = ctx = offset = drawLabels = mainGraphColor = margin = maxX = maxY = minX = minY = fitness = position = name = margin = undefined;
+};
+
+var drawGraph = (canvasId, graph,dL=true,off=0,m=20) => {
     //initialize variables
-    margin = 20;
+    margin = m;
     canvas = document.getElementById(canvasId);
     ctx = canvas.getContext("2d");
     ctx.lineCap="round";
@@ -191,7 +199,7 @@ var drawGraph = (canvasId, graph,dL=true,off=0) => {
         complexGraph(sections);
     }
 
-    width = height = ctx = offset = drawLabels = mainGraphColor = margin = maxX = maxY = minX = minY = fitness = position = name = undefined;
+    unsetGlobals();
 };
 
 export default drawGraph;
