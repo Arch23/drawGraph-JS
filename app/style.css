@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+input[type='file'] {
+    display: none
+}
+
+input[type='number'] {
+    height: 30px;
+}
+
+body {
+    font-family: Open Sans;
+    font-size: 16px;
+    position: relative;
+}
+
+.fixed-box{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.free-box{
+    width: 90%;
+    margin: 0 auto;
+}
+
+header {
+    background-color: #0984e3;
+    padding: 10px;
+    margin-bottom: 30px;
+}
+
+header *{
+    display: inline;
+    font-size: 16px;
+}
+
+.right{
+    float: right;
+}
+
+.right *{
+    display: inline;
+}
+
+.right :not(:last-child){
+    margin-right: 20px;
+}
+
+.left{
+    float: left;
+}
+
+.left * {
+    display: inline;
+}
+
+.left :not(:last-child){
+    margin-right: 20px;
+}
+
+.btn{
+    padding: 5px;
+    background-color: #0984e3;
+    border-radius: 3px;
+    height: 50px;
+}
+
+.shadow-1{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.shadow-1:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+#controls{
+    margin-bottom: 30px;
+}
+
+.controls-forms{
+    margin-bottom: 20px;
+}
+
+select {
+    width: 200px;
+    height: 30px;
+    padding: 3px;
+}
+
+#upload-text{
+    width: 500px;
+}
+
+.canvas{
+    width: 600px;
+    height: 600px;
+    border:1px solid #000000;
+    margin-right: 2px;
+}
